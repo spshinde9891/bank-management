@@ -17,7 +17,7 @@ The system is designed to handle concurrent transactions safely using optimistic
 - Maven
 - Docker
 - Docker Compose
-- 
+ 
 # Features
 
 ## 1. Create Wallet
