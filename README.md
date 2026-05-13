@@ -55,17 +55,29 @@ This ensures:
 
 # API Endpoints
 
-## Create Wallet
+---
 
-### Request
-POST - /api/v1/wallets/save
+# 1. Create Wallet
 
---json
+Creates a new wallet with an initial balance.
+
+## Endpoint
+
+```http
+POST /api/v1/wallets/save
+```
+
+## Request Body
+
+```json
 {
   "amount": 100
 }
+```
 
---response:
+## Success Response
+
+```json
 {
   "data": {
     "walletId": 1,
@@ -81,18 +93,44 @@ POST - /api/v1/wallets/save
   "error": false,
   "timestamp": "2026-05-13T21:34:00.6363702"
 }
+```
 
+---
 
-PUT - /api/v1/wallets/update
+# 2. Update Wallet Balance
 
---json
+Updates wallet balance using deposit or withdraw operation.
+
+## Operation Types
+
+| Value | Operation |
+|---|---|
+| 1 | Deposit |
+| 2 | Withdraw |
+
+---
+
+## Deposit Amount
+
+### Endpoint
+
+```http
+PUT /api/v1/wallets/update
+```
+
+### Request Body
+
+```json
 {
+  "walletId": 1,
   "balance": 200,
-  "operationType": 1,
-  "walletId": 1
+  "operationType": 1
 }
+```
 
---response
+### Success Response
+
+```json
 {
   "data": {
     "walletId": 1,
@@ -108,11 +146,63 @@ PUT - /api/v1/wallets/update
   "error": false,
   "timestamp": "2026-05-13T21:50:26.8934843"
 }
+```
 
+---
 
-GetById - /api/v1/wallets/1
+## Withdraw Amount
 
---response:
+### Request Body
+
+```json
+{
+  "walletId": 1,
+  "balance": 100,
+  "operationType": 2
+}
+```
+
+### Success Response
+
+```json
+{
+  "data": {
+    "walletId": 1,
+    "balance": 200,
+    "operationType": 2,
+    "createdOn": "2026-05-13T21:34:00.574853",
+    "createdBy": 1,
+    "modifiedBy": 1,
+    "modifiedOn": "2026-05-13T21:55:12.123456"
+  },
+  "status": "OK",
+  "message": "Wallet updated successfully",
+  "error": false,
+  "timestamp": "2026-05-13T21:55:12.123456"
+}
+```
+
+---
+
+# 3. Get Wallet By ID
+
+Fetch wallet details and current balance using wallet ID.
+
+## Endpoint
+
+```http
+GET /api/v1/wallets/{walletId}
+```
+
+## Example
+
+```http
+GET /api/v1/wallets/1
+```
+
+## Success Response
+
+```json
 {
   "data": {
     "walletId": 1,
@@ -128,3 +218,17 @@ GetById - /api/v1/wallets/1
   "error": false,
   "timestamp": "2026-05-13T22:00:05.7613457"
 }
+```
+
+---
+
+# Validations Implemented
+
+- Wallet ID validation
+- Positive balance validation
+- Insufficient balance validation
+- Invalid operation type validation
+- Concurrent transaction handling
+- Exception handling with proper API responses
+
+```
