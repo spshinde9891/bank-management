@@ -43,7 +43,6 @@ The system is designed to handle concurrent transactions safely using optimistic
 # Concurrency Handling
 
 Implemented:
-- Optimistic Locking using `@Version`
 - Retry mechanism for concurrent requests
 - Thread-safe wallet updates
 
